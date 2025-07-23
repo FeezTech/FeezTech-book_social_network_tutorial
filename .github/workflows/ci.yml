@@ -1,5 +1,8 @@
 name: Java CI with Maven
 
+env:
+  DB_URL: jdbc:postgresql://postgres-sql-bsn:5432/book_social_network
+
 on:
   push:
     branches: [main, ci/pipeline]
