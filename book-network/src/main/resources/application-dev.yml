@@ -1,22 +1,17 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/book_social_network
-    username: username
-    password: password
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
 
   application:
     name: booknetwork
 
   jpa:
     hibernate:
-      ddl-auto: update
-    database: postgresql
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
 
   mail:
     host: smtp.gmail.com
