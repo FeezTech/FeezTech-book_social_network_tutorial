@@ -1,0 +1,66 @@
+name: BSN Frontend API Pipeline
+
+on:
+  push:
+    branches:
+      - ci/pipeline
+    paths:
+      - book-network-ui/**
+      - docker/frontend/**
+      - 'docker-compose.yml'
+      - .github/workflows/*-frontend.yml
+
+jobs:
+  build-image:
+    name: Build Frontend Docker Image
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Extract project version
+        id: extract_version
+        run: |
+          cd book-network-ui
+          VERSION=$(jq -r '.version' package.json)
+          echo "VERSION=$VERSION"
+          echo "version=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image and Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: book-network-ui
+          file: docker/frontend/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:${{ steps.extract_version.outputs.version }},${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest
+  deploy:
+    name: Deploy Frontend
+    runs-on: self-hosted
+    needs: [ build-image ]
+    steps:
+      - name: Create Deployment folder
+        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
+
+      - name: Copy docker-compose file
+        run: scp docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
+
+      - name: Deploy frontend container and set the ENV variables
+        run: |
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          cd ci-cd
+          docker compose -f docker-compose.yml pull -q
+          docker compose -f docker-compose.yml up -d
+          EOF
