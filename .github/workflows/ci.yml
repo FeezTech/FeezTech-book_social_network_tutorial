@@ -43,9 +43,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
-      - name: Make mvnw executable and build
-        working-directory: book-network
+      - name: Build with Maven
+        env:
+          DB_URL: jdbc:postgresql://localhost:5432/booknetwork
+          EMAIL_HOSTNAME: localhost
+          EMAIL_USERNAME: test@example.com
+          EMAIL_PASSWORD: dummy-password
         run: |
+          cd book-network
           chmod +x mvnw
-          ./mvnw clean install -e -X
+          ./mvnw clean install
       
