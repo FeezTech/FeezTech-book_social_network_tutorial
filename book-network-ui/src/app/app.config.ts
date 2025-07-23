@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     ...provideApi({
-      rootUrl: 'http://ec2-13-48-58-134.eu-north-1.compute.amazonaws.com:8080/api/v1'
+      rootUrl: 'http://13.48.58.134:8088/api/v1'
     })
   ]
 };
