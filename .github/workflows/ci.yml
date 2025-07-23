@@ -51,13 +51,13 @@ jobs:
         run: ./mvnw clean install
         working-directory: book-network
 
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /your/server/app
-            docker compose --env-file .env down
-            docker compose --env-file .env up -d --build
+      #- name: Deploy to VPS via SSH
+        #uses: appleboy/ssh-action@master
+        #with:
+          #host: ${{ secrets.VPS_IP }}
+          #username: ${{ secrets.VPS_USERNAME }}
+          #key: ${{ secrets.SSH_PRIVATE_KEY }}
+         # script: |
+            #cd /your/server/app
+            #docker compose --env-file .env down
+            #docker compose --env-file .env up -d --build
