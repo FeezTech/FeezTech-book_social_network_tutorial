@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/book_social_network
+    username: username
+    password: password
     driver-class-name: org.postgresql.Driver
 
   application:
@@ -17,10 +17,11 @@ spring:
       hibernate:
         format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   mail:
-    host: ${EMAIL_HOSTNAME}
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
+    host: smtp.gmail.com
+    username: abdussalaamabdulafeez@gmail.com
+    password: your_gmail_app_password
     port: 587
     properties:
       mail:
@@ -48,5 +49,6 @@ application:
   file:
     upload:
       photos-output-path: ./uploads
+
 server:
   port: 8088
