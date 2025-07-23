@@ -47,5 +47,5 @@ jobs:
         working-directory: book-network
         run: |
           chmod +x mvnw
-          ./mvnw clean install
+          ./mvnw clean install -e -X
       
