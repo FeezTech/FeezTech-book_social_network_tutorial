@@ -45,8 +45,10 @@ jobs:
 
       - name: Grant execute permission to mvnw
         run: chmod +x ./mvnw
+        working-directory: book-network
 
       - name: Build with Maven
         run: ./mvnw clean install
         working-directory: book-network
+
       
