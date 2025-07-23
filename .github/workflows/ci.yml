@@ -44,13 +44,7 @@ jobs:
             ${{ runner.os }}-m2-
 
       - name: Build with Maven
-        env:
-          DB_URL: jdbc:postgresql://localhost:5432/booknetwork
-          EMAIL_HOSTNAME: localhost
-          EMAIL_USERNAME: test@example.com
-          EMAIL_PASSWORD: dummy-password
         run: |
           cd book-network
-          chmod +x mvnw
           ./mvnw clean install
       
