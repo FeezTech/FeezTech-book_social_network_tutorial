@@ -1,7 +1,7 @@
 name: Java CI with Maven
 
 env:
-  DB_URL: jdbc:postgresql://postgres-sql-bsn:5432/book_social_network
+  DB_URL: jdbc:postgresql://localhost:5432/book_social_network
 
 on:
   push:

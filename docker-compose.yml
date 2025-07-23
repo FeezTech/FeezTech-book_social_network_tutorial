@@ -36,7 +36,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DB_URL: ${DB_URL}
+      DB_URL: jdbc:postgresql://localhost:5432/book_social_network
       ACTIVE_PROFILE: ${ACTIVE_PROFILE}
       JAR_VERSION: ${APP_VERSION}
       EMAIL_HOSTNAME: ${EMAIL_HOSTNAME}
