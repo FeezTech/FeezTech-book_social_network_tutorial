@@ -1,3 +1,4 @@
+
 name: BSN Frontend API Pipeline
 
 on:
@@ -16,7 +17,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/setup-java@v3
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -52,14 +53,14 @@ jobs:
     needs: [ build-image ]
     steps:
       - name: Create Deployment folder
-        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
+        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
-        run: scp docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
+        run: scp docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }}:ci-cd/docker-compose.yml
 
       - name: Deploy frontend container and set the ENV variables
         run: |
-          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }} <<EOF
           cd ci-cd
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d

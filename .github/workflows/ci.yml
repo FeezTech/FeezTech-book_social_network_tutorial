@@ -1,16 +1,13 @@
 name: Java CI with Maven
 
-env:
-  DB_URL: jdbc:postgresql://localhost:5432/book_social_network
-
 on:
   push:
-    branches: [main, ci/pipeline]
+    branches: [ main, ci/pipeline ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -54,4 +51,31 @@ jobs:
         run: ./mvnw clean install
         working-directory: book-network
 
-      
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_IP_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /path/to/your/app
+
+            # Pull latest image from Docker Hub
+            docker pull your-dockerhub-username/bsn:1.0.3
+
+            # Generate .env file dynamically
+            echo "APP_VERSION=1.0.3" > .env
+            echo "ACTIVE_PROFILE=prod" >> .env
+            echo "DB_HOST=postgres-sql-bsn" >> .env
+            echo "DB_PORT=5432" >> .env
+            echo "DB_NAME=book_social_network" >> .env
+            echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            echo "DB_URL=jdbc:postgresql://postgres-sql-bsn:5432/book_social_network" >> .env
+            echo "EMAIL_HOSTNAME=smtp.gmail.com" >> .env
+            echo "EMAIL_USERNAME=${{ secrets.EMAIL_USERNAME }}" >> .env
+            echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+
+            # Rebuild and restart services with new .env
+            docker compose --env-file .env down
+            docker compose --env-file .env up -d --build

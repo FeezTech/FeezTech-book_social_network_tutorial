@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/book_social_network
-    username: username
-    password: password
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   application:
@@ -18,14 +18,13 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
-    host: ${EMAIL_HOSTNAME:localhost}
-    port: 465
+    host: ${EMAIL_HOSTNAME}
     username: ${EMAIL_USERNAME}
     password: ${EMAIL_PASSWORD}
+    port: 587
     properties:
       mail:
         smtp:
-          trust: "*"
           auth: true
           starttls:
             enable: true

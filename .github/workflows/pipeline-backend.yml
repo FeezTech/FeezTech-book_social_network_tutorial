@@ -1,3 +1,4 @@
+
 name: BSN Backend API Pipeline
 
 on:
@@ -16,7 +17,7 @@ jobs:
     name: Compile project
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -46,7 +47,7 @@ jobs:
     name: unit tests
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -60,7 +61,7 @@ jobs:
         run: |
           cd book-network
           ./mvnw clean test
-          
+  
 
   build:
     runs-on: self-hosted
@@ -68,7 +69,7 @@ jobs:
     needs: [ compile,unit-tests ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -82,7 +83,7 @@ jobs:
         run: |
           cd book-network
           ./mvnw clean package
-          
+
   #<<<<Build Docker Image>>>>>
   build-image:
     name: Build Docker Image
@@ -90,7 +91,7 @@ jobs:
     needs: [ build ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -99,11 +100,6 @@ jobs:
         with:
           java-version: 21
           distribution: 'corretto'
-
-      - name: Build project
-        run: |
-          cd book-network
-          ./mvnw clean package
 
       - name: Extract project version
         id: extract_version
@@ -131,7 +127,7 @@ jobs:
           build-args: |
             PROFILE=dev
             APP_VERSION=${{ steps.extract_version.outputs.version }}
-            
+  
 
   deploy:
     name: Deploy Backend
@@ -139,17 +135,17 @@ jobs:
     needs: [ build-image ]
     steps:
       - name: Create Deployment folder
-        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
+        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
-        run: scp docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
+        run: scp docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }}:ci-cd/docker-compose.yml
 
       - name: Copy .env file
-        run: scp .env ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/.env
+        run: scp .env ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }}:ci-cd/.env
 
       - name: Deploy backend container using Docker Compose
         run: |
-          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP_HOST }} <<EOF
           cd ci-cd
           docker compose --env-file .env -f docker-compose.yml pull -q
           docker compose --env-file .env -f docker-compose.yml up -d --build
