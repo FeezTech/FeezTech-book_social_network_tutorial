@@ -43,8 +43,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
+      - name: Grant execute permission to mvnw
+        run: chmod +x ./mvnw
+
       - name: Build with Maven
-        run: |
-          cd book-network
-          ./mvnw clean install
+        run: ./mvnw clean install
+        working-directory: book-network
       
