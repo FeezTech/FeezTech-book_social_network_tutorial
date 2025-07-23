@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BorrowedBookResponse, FeedbackRequest, PageResponseBorrowedBookResponse } from '../../../../services/models';
@@ -8,11 +8,8 @@ import { RatingComponent } from "../../components/rating/rating.component";
 @Component({
   selector: 'app-borrowed-book-list',
   imports: [
-    NgFor,
-    NgIf,
     FormsModule,
-    RatingComponent,
-    /* RouterModule */
+    RatingComponent
 ],
   templateUrl: './borrowed-book-list.component.html',
   styleUrl: './borrowed-book-list.component.scss'

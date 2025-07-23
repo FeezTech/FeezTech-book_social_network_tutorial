@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -9,11 +9,9 @@ import { BookService } from '../../../../services/services';
     standalone: true,
   selector: 'app-manage-book',
   imports: [
-    NgIf,
-    NgFor,
     FormsModule,
     RouterModule
-  ],
+],
   templateUrl: './manage-book.component.html',
   styleUrl: './manage-book.component.scss'
 })

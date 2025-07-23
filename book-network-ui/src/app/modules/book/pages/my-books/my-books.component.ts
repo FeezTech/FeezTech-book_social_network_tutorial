@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookResponse, PageResponseBookResponse } from '../../../../services/models';
@@ -9,8 +9,7 @@ import { BookCardComponent } from "../../components/book-card/book-card.componen
   selector: 'app-my-books',
   imports: [
     BookCardComponent,
-    NgForOf,
-    RouterModule,
+    RouterModule
 ],
   templateUrl: './my-books.component.html',
   styleUrl: './my-books.component.scss'

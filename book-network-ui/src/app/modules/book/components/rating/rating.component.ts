@@ -1,12 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
+
 
 @Component({
   selector: 'app-rating',
-  imports: [
-    NgForOf,
-    NgIf
-  ],
+  imports: [],
   templateUrl: './rating.component.html',
   styleUrl: './rating.component.scss'
 })

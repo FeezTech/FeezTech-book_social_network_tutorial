@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BorrowedBookResponse, PageResponseBorrowedBookResponse } from '../../../../services/models';
@@ -7,10 +7,8 @@ import { BookService } from '../../../../services/services';
 @Component({
   selector: 'app-return-books',
   imports: [
-    NgFor,
-    NgIf,
     FormsModule
-  ],
+],
   templateUrl: './return-books.component.html',
   styleUrl: './return-books.component.scss'
 })

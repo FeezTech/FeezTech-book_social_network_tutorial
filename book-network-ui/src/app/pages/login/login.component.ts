@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,10 +11,8 @@ import { TokenService } from '../../services/token/token.service';
   standalone: true,
   selector: 'app-login',
   imports: [
-    FormsModule,
-    NgIf,
-    NgFor
-  ],
+    FormsModule
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

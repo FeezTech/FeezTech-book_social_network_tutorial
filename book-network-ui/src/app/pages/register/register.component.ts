@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 import {RegistrationRequest} from '../../services/models/registration-request';
 import {FormsModule} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
+
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/services/authentication.service';
 
 @Component({
   selector: 'app-register',
   imports: [
-    FormsModule,
-    NgForOf,
-    NgIf
-  ],
+    FormsModule
+],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
