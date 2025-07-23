@@ -58,6 +58,6 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /path/to/your/app
+            cd /your/server/app
             docker compose --env-file .env down
             docker compose --env-file .env up -d --build
