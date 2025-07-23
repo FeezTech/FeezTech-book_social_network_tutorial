@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/book_social_network
+    url: jdbc:postgresql://localhost:5432/book_social_network
     username: username
     password: password
     driver-class-name: org.postgresql.Driver
@@ -19,10 +19,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
-    host: smtp.gmail.com
-    username: abdussalaamabdulafeez@gmail.com
-    password: your_gmail_app_password
-    port: 587
+    host: ${EMAIL_HOSTNAME}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    port: 465
     properties:
       mail:
         smtp:
@@ -44,7 +44,7 @@ application:
       activation-url: http://localhost:4200/activate-account/
 
   cors:
-    origin: http://localhost:4200,http://localhost:8081,http://localhost:8088,http://13.48.58.134:8088,http://13.48.58.134:8081
+    origins: http://localhost:4200,http://localhost:8081,http://localhost:8088,http://13.48.58.134:8088,http://13.48.58.134:8081
 
   file:
     upload:

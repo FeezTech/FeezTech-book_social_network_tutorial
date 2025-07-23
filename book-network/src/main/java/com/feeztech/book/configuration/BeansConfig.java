@@ -62,7 +62,9 @@ public class BeansConfig {
         final CorsConfiguration config = new CorsConfiguration();
         //config.setAllowCredentials(true); this shouldn't be commented out in real production mode we just commented it out here to allow the (:*) to work and to avoid all kind of issues.
         config.setAllowedOrigins(allowedOrigins);
-        config.setAllowedHeaders(Arrays.asList(
+        config.setAllowedHeaders(Arrays.asList("*")); // Not recommended for production
+        config.setAllowedMethods(Arrays.asList("*")); // Not recommended for production
+        /*config.setAllowedHeaders(Arrays.asList(
                 ORIGIN,
                 CONTENT_TYPE,
                 ACCEPT,
@@ -75,14 +77,14 @@ public class BeansConfig {
                 "Cache-Control",
                 "Pragma",
                 "Expires"
-        ));
-        config.setAllowedMethods(Arrays.asList(
+        ));*/
+        /*config.setAllowedMethods(Arrays.asList(
                 "GET",
                 "POST",
                 "PUT",
                 "DELETE",
                 "PATCH"
-        ));
+        ));*/
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
