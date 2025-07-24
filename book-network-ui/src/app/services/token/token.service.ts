@@ -5,33 +5,38 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class TokenService {
-
-  set token (token: string) {
-    localStorage.setItem('token', token);
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && !!window.localStorage;
   }
 
-  get token() {
-    return localStorage.getItem('token') as string;
+  set token(token: string) {
+    if (this.isBrowser()) {
+      localStorage.setItem('token', token);
+    }
   }
 
-    isTokenNotValid(): boolean {
-        return !this.isTokenValid();
+  get token(): string {
+    if (this.isBrowser()) {
+      return localStorage.getItem('token') as string;
     }
+    return '';
+  }
 
-    isTokenValid(): boolean {
-        const token = this.token;
-        if(!token) {
-            return false;
-        }
-        //other wise we need to decode the token
-        const jwtHelper = new JwtHelperService();
-        // check the expiry date of the token
-        const isTokenExpired = jwtHelper.isTokenExpired(token);
-        if(isTokenExpired) {
-            localStorage.clear();
-            return false;
-        }
-        return true;
+  isTokenNotValid(): boolean {
+    return !this.isTokenValid();
+  }
+
+  isTokenValid(): boolean {
+    const token = this.token;
+    if (!token) {
+      return false;
     }
-
+    const jwtHelper = new JwtHelperService();
+    const isTokenExpired = jwtHelper.isTokenExpired(token);
+    if (isTokenExpired && this.isBrowser()) {
+      localStorage.clear();
+      return false;
+    }
+    return true;
+  }
 }
