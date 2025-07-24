@@ -57,6 +57,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Make Maven wrapper executable
+        run: chmod +x book-network/mvnw
+
       - name: Running unit Tests
         run: |
           cd book-network
@@ -79,6 +82,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Make Maven wrapper executable
+        run: chmod +x book-network/mvnw
+
       - name: Build project
         run: |
           cd book-network
@@ -100,6 +106,9 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Make Maven wrapper executable
+        run: chmod +x book-network/mvnw
 
       - name: Build Project
         run: |
