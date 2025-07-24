@@ -8,10 +8,10 @@ spring:
   application:
     name: booknetwork
 
-  #jpa:
-    #hibernate:
-      #ddl-auto: create-drop
-    #database-platform: org.hibernate.dialect.H2Dialect
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
     host: smtp.gmail.com
