@@ -63,7 +63,7 @@ jobs:
       - name: Add VPS to known_hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H 13.48.58.134 >> ~/.ssh/known_hosts
 
       - name: Set SSH private key
         uses: webfactory/ssh-agent@v0.7.0
@@ -71,7 +71,7 @@ jobs:
           ssh-private-key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
 
       - name: Create Deployment folder
-        run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
+        run: ssh ubuntu@13.48.58.134 "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
         run: scp book-network-backend/docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
