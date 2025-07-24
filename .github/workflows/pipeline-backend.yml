@@ -56,7 +56,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U postgres"
+          --health-cmd="pg_isready -U username"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -84,6 +84,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build backend
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: book_social_network
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U username"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     needs: [ compile, unit-tests ]
     steps:
       - name: Checkout code
@@ -168,7 +182,7 @@ jobs:
         run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
-        run: scp docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
+        run: scp book-network-backend/docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
 
       - name: Set ENV variables and deploy
         run: |
