@@ -176,22 +176,35 @@ jobs:
             APP_VERSION=${{ steps.extract_version.outputs.version }}
 
   deploy:
-    name: Deploy Backend
+    name: Deploy Frontend
     runs-on: ubuntu-latest
-    needs: [build-image]
+    needs: [ build-image ]
     steps:
+      - name: Ensure SSH server is reachable
+        run: |
+          ping -c 4 ${{ secrets.VPS_IP }}
+          nc -zv ${{ secrets.VPS_IP }} 22
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Test SSH login
+        run: ssh -v ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "echo Connected"
+
       - name: Create Deployment folder
         run: ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
         run: scp book-network-backend/docker-compose.yml ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }}:ci-cd/docker-compose.yml
 
-      - name: Set ENV variables and deploy
+      - name: set ENV variables and deploy
         run: |
           ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
           export EMAIL_HOSTNAME=${{ secrets.EMAIL_HOSTNAME }}
           export EMAIL_USERNAME=${{ secrets.EMAIL_USERNAME }}
-          export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} 
+          export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
           cd ci-cd
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
