@@ -16,15 +16,15 @@ jobs:
     name: Compile project
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Set up JDK for java21
-        uses: actions/setup-jdk@v3
+        uses: actions/setup-jdk@v4
         with:
           java-version: 21
-          distribution: 'corretto'
+          distribution: 'temurin'
 
       - name: Compile project
         run: |
@@ -46,15 +46,15 @@ jobs:
     name: Unit tests
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Set up JDK fo java21
-        uses: actions/setup-jdk@v3
+        uses: actions/setup-jdk@v4
         with:
           java-version: '21'
-          distribution: 'corretto'
+          distribution: 'temurin'
 
       - name: Running unit Tests
         run: |
@@ -68,15 +68,15 @@ jobs:
     needs: [ compile, unit-tests ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup JDK for java21
-        uses: actions/setup-jdk@v3
+        uses: actions/setup-jdk@v4
         with:
           java-version: 21
-          distribution: 'corretto'
+          distribution: 'temurin'
 
       - name: Build project
         run: |
@@ -90,15 +90,15 @@ jobs:
     needs: [ build ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup JDK
-        uses: actions/setup-jdk@v3
+        uses: actions/setup-jdk@v4
         with:
           java-version: 21
-          distribution: 'corretto'
+          distribution: 'temurin'
 
       - name: Build Project
         run: |
