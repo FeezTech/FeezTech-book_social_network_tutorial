@@ -39,7 +39,7 @@ application:
       activation-url: http://localhost:4200/activate-account/
 
   cors:
-    origins: http://localhost:4200,http://localhost:8081,http://localhost:8088,http://13.48.58.134:8088,http://13.48.58.134:8081
+    origins: http://localhost:4200,http://localhost:8081,http://localhost:8088,http://13.48.58.134:8088,http://13.48.58.134:8080
 
   file:
     upload:

@@ -49,7 +49,7 @@ services:
     container_name: bsn-ui
     image: feeztech/bsn-ui
     ports:
-      - "8081:80"
+      - "8080:80"
     networks:
       - spring-demo
     depends_on:
