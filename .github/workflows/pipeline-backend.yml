@@ -20,11 +20,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK for java21
-        uses: actions/setup-jdk@v4
+      - name: Set up JDK for Java 21
+        uses: actions/setup-java@v3
         with:
-          java-version: 21
+          java-version: '21'
           distribution: 'temurin'
+
 
       - name: Give permission to Maven wrapper
         run: chmod +x book-network/mvnw
@@ -50,8 +51,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK fo java21
-        uses: actions/setup-jdk@v4
+      - name: Set up JDK for Java 21
+        uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -72,10 +73,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup JDK for java21
-        uses: actions/setup-jdk@v4
+      - name: Set up JDK for Java 21
+        uses: actions/setup-java@v3
         with:
-          java-version: 21
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Build project
@@ -94,10 +95,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup JDK
-        uses: actions/setup-jdk@v4
+      - name: Set up JDK for Java 21
+        uses: actions/setup-java@v3
         with:
-          java-version: 21
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Build Project
