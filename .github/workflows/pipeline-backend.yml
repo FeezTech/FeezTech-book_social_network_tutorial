@@ -176,7 +176,7 @@ jobs:
             APP_VERSION=${{ steps.extract_version.outputs.version }}
 
   deploy:
-    name: Deploy Frontend
+    name: Deploy Backend
     runs-on: ubuntu-latest
     needs: [ build-image ]
     steps:
