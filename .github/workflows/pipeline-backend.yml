@@ -189,7 +189,7 @@ jobs:
       - name: Set SSH private key
         uses: webfactory/ssh-agent@v0.7.0
         with:
-          ssh-private-key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Create Deployment folder
         run: ssh ubuntu@ec2-13-48-58-134.eu-north-1.compute.amazonaws.com "mkdir -p ci-cd"
