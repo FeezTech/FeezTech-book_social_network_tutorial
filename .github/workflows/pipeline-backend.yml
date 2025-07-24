@@ -12,7 +12,7 @@ on:
 
 jobs:
   compile:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: Compile project
     steps:
       - name: Checkout code
@@ -26,13 +26,13 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
+      - name: Give permission to Maven wrapper
+        run: chmod +x book-network/mvnw
+
       - name: Compile project
         run: |
           cd book-network
           ./mvnw clean compile
-
-      #- name: Give permission to Maven wrapper
-        #run: chmod +x book-network/mvnw
 
       #- name: Build with Maven
         #run: |
@@ -42,7 +42,7 @@ jobs:
   #<<<<Unit Test>>>>>
 
   unit-tests:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: Unit tests
     steps:
       - name: Checkout code
@@ -63,7 +63,7 @@ jobs:
   
 
   build:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: Build backend
     needs: [ compile, unit-tests ]
     steps:
@@ -86,7 +86,7 @@ jobs:
   #<<<<Build Docker Image>>>>>
   build-image:
     name: Build Docker Image
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     needs: [ build ]
     steps:
       - name: Checkout code
@@ -108,6 +108,7 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
+          set -e
           cd book-network
           VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION"
@@ -135,7 +136,7 @@ jobs:
 
   deploy:
     name: Deploy Backend
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     needs: [ build-image ]
     steps:
       - name: Create Deployment folder
@@ -146,7 +147,7 @@ jobs:
 
       - name: set ENV variables and deploy
         run: |
-          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOFt
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
           export EMAIL_HOSTNAME=${{ secrets.EMAIL_HOSTNAME }}
           export EMAIL_USERNAME=${{ secrets.EMAIL_USERNAME }}
           export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} 

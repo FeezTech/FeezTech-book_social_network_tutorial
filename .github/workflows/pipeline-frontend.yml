@@ -14,7 +14,7 @@ on:
 jobs:
   build-image:
     name: Build Frontend Docker Image
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,8 +33,12 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
-          #cd book-network-ui
-          #echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+          cd book-network-ui
+          version=$(jq -r '.version' package.json)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Use the version
+        run: echo "The version is ${{ steps.extract_version.outputs.VERSION }}"
 
 
       - name: Login to DockerHub
