@@ -21,6 +21,10 @@ services:
       timeout: 5s
       retries: 5
 
+    depends_on:
+      postgres-sql-bsn:
+        condition: service_healthy
+
   mail-dev:
     container_name: mail-dev-bsn
     image: maildev/maildev

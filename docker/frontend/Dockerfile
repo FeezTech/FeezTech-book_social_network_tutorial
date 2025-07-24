@@ -19,3 +19,6 @@ COPY --from=build-stage /app/dist/book-network-ui/browser /usr/share/nginx/html
 RUN if [ -f /usr/share/nginx/html/index.csr.html ]; then mv /usr/share/nginx/html/index.csr.html /usr/share/nginx/html/index.html; fi
 
 EXPOSE 80
+
+#Start Nginx in foreground to prevent container exit
+CMD ["nginx", "-g", "daemon off;"]
