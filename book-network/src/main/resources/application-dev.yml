@@ -4,6 +4,9 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: username
     password: password
+    hikari:
+      initialization-fail-timeout: 10000
+      connection-timeout: 20000
 
   application:
     name: booknetwork
