@@ -15,7 +15,7 @@ services:
       - spring-demo
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U username"]
+      test: [ "CMD-SHELL", "pg_isready -U username -d book_social_network" ]
       interval: 10s
       timeout: 5s
       retries: 5
